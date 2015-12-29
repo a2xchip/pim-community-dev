@@ -8,7 +8,8 @@ use Akeneo\Bundle\BatchBundle\Entity\JobInstance;
 use Akeneo\Component\StorageUtils\Saver\SaverInterface;
 use Behat\Behat\Context\Step;
 use Behat\Gherkin\Node\PyStringNode;
-use Behat\Gherkin\Node\TableNode;use Doctrine\Common\Util\ClassUtils;
+use Behat\Gherkin\Node\TableNode;
+use Doctrine\Common\Util\ClassUtils;
 use League\Flysystem\MountManager;
 use Oro\Bundle\UserBundle\Entity\Role;
 use Pim\Behat\Context\FixturesContext as BaseFixturesContext;
@@ -864,10 +865,10 @@ class FixturesContext extends BaseFixturesContext
 
         $string = $this->replacePlaceholders($string);
 
-        $this->placeholderValues['%file to import%'] = $filename =
+        self::$placeholderValues['%file to import%'] = $filename =
             sprintf(
                 '%s/pim-import/behat-import-%s.%s',
-                $this->placeholderValues['%tmp%'],
+                self::$placeholderValues['%tmp%'],
                 substr(md5(rand()), 0, 7),
                 $extension
             );
@@ -1379,16 +1380,6 @@ class FixturesContext extends BaseFixturesContext
         }
 
         return $this->locales[$language];
-    }
-
-    /**
-     * @param string $value
-     *
-     * @return string
-     */
-    public function replacePlaceholders($value)
-    {
-        return strtr($value, $this->placeholderValues);
     }
 
     /**

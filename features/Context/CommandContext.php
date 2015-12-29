@@ -19,9 +19,6 @@ use Symfony\Component\Console\Tester\CommandTester;
  */
 class CommandContext extends PimContext
 {
-    /** @var array */
-    protected $placeholderValues = [];
-
     /**
      * @Given /^I launched the completeness calculator$/
      */
@@ -133,16 +130,6 @@ class CommandContext extends PimContext
     }
 
     /**
-     * @param string $value
-     *
-     * @return string
-     */
-    public function replacePlaceholders($value)
-    {
-        return strtr($value, $this->placeholderValues);
-    }
-
-    /**
      * @param string $rawActions
      *
      * @return string
@@ -153,7 +140,7 @@ class CommandContext extends PimContext
 
         foreach ($actions as $key => $action) {
             if (isset($action->data->filePath)) {
-                $action->data->filePath = $this->replacePlaceholders($action->data->filePath);
+                $action->data->filePath = self::replacePlaceholders($action->data->filePath);
             }
         }
 

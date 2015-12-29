@@ -226,7 +226,7 @@ class HookContext extends PimContext
     /**
      * @BeforeScenario
      */
-    public function resetPlaceholderValues()
+    public static function resetPlaceholderValues()
     {
         parent::resetPlaceholderValues();
     }
@@ -237,7 +237,7 @@ class HookContext extends PimContext
     public function removeTmpDir()
     {
         $fs = new \Symfony\Component\Filesystem\Filesystem();
-        $fs->remove($this->placeholderValues['%tmp%']);
+        $fs->remove(self::$placeholderValues['%tmp%']);
     }
 
     /**
