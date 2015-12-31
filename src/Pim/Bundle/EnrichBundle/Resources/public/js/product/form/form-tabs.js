@@ -29,8 +29,6 @@ define(
              * {@inheritdoc}
              */
             initialize: function () {
-                this.tabs = [];
-
                 BaseForm.prototype.initialize.apply(this, arguments);
             },
 
@@ -38,6 +36,7 @@ define(
              * {@inheritdoc}
              */
             configure: function () {
+                this.tabs = [];
                 this.onExtensions('tab:register',  this.registerTab.bind(this));
                 this.listenTo(this.getRoot(), 'pim_enrich:form:form-tabs:change', this.setCurrentTab);
 
