@@ -40,18 +40,11 @@ define(['jquery', 'underscore', 'backbone', 'routing'], function ($, _, Backbone
          * @return {Promise}
          */
         search: function (searchOptions) {
-            var url = '';
-            if (!_.has(this.options.urls, 'search')) {
-                if (!_.has(this.options.urls, 'list')) {
-                    return $.Deferred().reject().promise();
-                } else {
-                    url = this.options.urls.list
-                }
-            } else {
-                url = this.options.urls.search;
+            if (!_.has(this.options.urls, 'list')) {
+                return $.Deferred().reject().promise();
             }
 
-            return this.getJSON(url, searchOptions).then(_.identity).promise();
+            return this.getJSON(this.options.urls.list, searchOptions).then(_.identity).promise();
         },
 
         /**
@@ -73,10 +66,10 @@ define(['jquery', 'underscore', 'backbone', 'routing'], function ($, _, Backbone
                         Routing.generate(this.options.urls.get, _.extend({identifier: identifier}, options))
                     ).then(_.identity).done(function (entity) {
                         deferred.resolve(entity);
-                    }).fail(function (promise, status, error) {
-                        console.error('Error during fetching: ', error);
+                    }).fail(function () {
+                        console.error('Error during fetching: ', arguments);
 
-                        return deferred.reject(promise);
+                        return deferred.reject();
                     });
                 } else {
                     this.fetchAll().done(function (entities) {
@@ -102,8 +95,7 @@ define(['jquery', 'underscore', 'backbone', 'routing'], function ($, _, Backbone
          *
          * @return {Promise}
          */
-        fetchByIdentifiers: function (identifiers, options) {
-            options = options || {};
+        fetchByIdentifiers: function (identifiers) {
             if (0 === identifiers.length) {
                 return $.Deferred().resolve([]).promise();
             }
@@ -114,10 +106,8 @@ define(['jquery', 'underscore', 'backbone', 'routing'], function ($, _, Backbone
             }
 
             return $.when(
-                    this.getJSON(
-                        this.options.urls.list,
-                        _.extend({ identifiers: uncachedIdentifiers.join(',') }, options)
-                    ).then(_.identity),
+                    this.getJSON(this.options.urls.list, { identifiers: uncachedIdentifiers.join(',') })
+                        .then(_.identity),
                     this.getIdentifierField()
                 ).then(function (entities, identifierCode) {
                     _.each(entities, function (entity) {

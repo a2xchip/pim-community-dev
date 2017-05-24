@@ -22,8 +22,8 @@ define([
             /**
              * {@inheritdoc}
              */
-            getUrl: function (identifier) {
-                return Routing.generate(this.url, { identifier: identifier });
+            getUrl: function (code) {
+                return Routing.generate(this.url, { code: code });
             },
 
             /**

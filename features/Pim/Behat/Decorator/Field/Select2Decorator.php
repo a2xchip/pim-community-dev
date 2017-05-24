@@ -70,19 +70,12 @@ class Select2Decorator extends ElementDecorator
             'a.select2-choice'
         ));
         foreach ($elements as $element) {
-            $this->spin(function () use ($element) {
-                $closeElement = $element->find('css', '.select2-search-choice-close');
-                if (null !== $closeElement && $closeElement->isVisible()) {
-                    $closeElement->click();
-
-                    return false === $element->isValid() || !$closeElement->isVisible();
-                };
-
-                return true;
-            }, 'Element is unchanged after deletion');
+            $closeElement = $element->find('css', '.select2-search-choice-close');
+            if ($closeElement->isVisible()) {
+                $closeElement->click();
+            }
         }
     }
-
 
     /**
      * Open the select2 dropdown.

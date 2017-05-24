@@ -90,9 +90,6 @@ class AttributeController
                 ['limit' => SearchableRepositoryInterface::FETCH_LIMIT, 'locale' => null]
             );
         }
-        if ($request->request->has('rights')) {
-            $options['rights'] = (bool) $request->request->get('rights');
-        }
 
         $token = $this->tokenStorage->getToken();
         $options['user_groups_ids'] = $token->getUser()->getGroupsIds();
@@ -103,6 +100,7 @@ class AttributeController
         );
 
         $normalizedAttributes = $this->normalizer->normalize($attributes, 'internal_api', $context);
+
         return new JsonResponse($normalizedAttributes);
     }
 

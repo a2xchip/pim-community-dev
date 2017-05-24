@@ -17,8 +17,7 @@ define(
         'pim/saver/entity-saver',
         'pim/field-manager',
         'pim/i18n',
-        'pim/user-context',
-        'pim/router'
+        'pim/user-context'
     ],
     function (
         $,
@@ -29,8 +28,7 @@ define(
         EntitySaver,
         FieldManager,
         i18n,
-        UserContext,
-        router
+        UserContext
     ) {
         return BaseSave.extend({
 
@@ -94,15 +92,11 @@ define(
 
                 return EntitySaver
                     .setUrl(this.config.url)
-                    .save(entity.code, entity, this.config.method || 'POST')
+                    .save(entity.code, entity)
                     .then(function (data) {
                         this.postSave();
                         this.setData(data);
                         this.getRoot().trigger('pim_enrich:form:entity:post_fetch', data);
-
-                        if (this.config.redirectAfter) {
-                            router.redirectToRoute(this.config.redirectAfter, {identifier: entity.code});
-                        }
                     }.bind(this))
                     .fail(this.fail.bind(this))
                     .always(this.hideLoadingMask.bind(this));

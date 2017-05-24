@@ -96,10 +96,10 @@ define(
                     .fail(function (xhr) {
                         var message = xhr.responseJSON && xhr.responseJSON.message ?
                             xhr.responseJSON.message :
-                            __(this.config.trans.fail);
+                            __(this.config.trans.failed);
 
                         messenger.notificationFlashMessage('error', message);
-                    }.bind(this))
+                    })
                     .always(function () {
                         loadingMask.hide().$el.remove();
                     });

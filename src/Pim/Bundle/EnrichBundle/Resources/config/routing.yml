@@ -1,10 +1,6 @@
-attribute_group_front:
-    resource: '@PimEnrichBundle/Resources/config/routing/attribute_group/front.yml'
+attributegroup:
+    resource: '@PimEnrichBundle/Resources/config/routing/attributegroup.yml'
     prefix: /configuration/attribute-group
-
-attribute_group_rest:
-    resource: '@PimEnrichBundle/Resources/config/routing/attribute_group/rest.yml'
-    prefix: /rest/attribute-group
 
 channel:
     resource: '@PimEnrichBundle/Resources/config/routing/channel.yml'

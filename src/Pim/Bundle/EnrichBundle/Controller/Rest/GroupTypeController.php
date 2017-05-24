@@ -113,9 +113,9 @@ class GroupTypeController
      *
      * @AclAncestor("pim_enrich_grouptype_edit")
      */
-    public function postAction(Request $request, $identifier)
+    public function postAction(Request $request, $code)
     {
-        $groupType = $this->getGroupTypeOr404($identifier);
+        $groupType = $this->getGroupTypeOr404($code);
 
         $data = json_decode($request->getContent(), true);
 

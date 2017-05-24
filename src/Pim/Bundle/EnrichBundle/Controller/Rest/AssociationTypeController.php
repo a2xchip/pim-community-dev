@@ -109,9 +109,9 @@ class AssociationTypeController
      *
      * @AclAncestor("pim_enrich_associationtype_edit")
      */
-    public function postAction(Request $request, $identifier)
+    public function postAction(Request $request, $code)
     {
-        $associationType = $this->getAssociationTypeOr404($identifier);
+        $associationType = $this->getAssociationTypeOr404($code);
 
         $data = json_decode($request->getContent(), true);
         $this->updater->update($associationType, $data);
@@ -165,9 +165,11 @@ class AssociationTypeController
      *
      * @return AssociationTypeInterface
      */
-    protected function getAssociationTypeOr404($code)
+    private function getAssociationTypeOr404($code)
     {
-        $associationType = $this->associationTypeRepo->findOneByIdentifier($code);
+        $associationType = $this->associationTypeRepo->findOneBy(
+            ['code' => $code]
+        );
         if (null === $associationType) {
             throw new NotFoundHttpException(
                 sprintf('Association type with code "%s" not found', $code)
